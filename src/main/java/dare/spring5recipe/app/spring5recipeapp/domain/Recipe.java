@@ -18,7 +18,7 @@ public class Recipe {
     private String url;
     private String directions;
 
-    //test
+    //test1
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
