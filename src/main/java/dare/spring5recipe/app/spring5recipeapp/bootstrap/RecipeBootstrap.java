@@ -4,6 +4,8 @@ import dare.spring5recipe.app.spring5recipeapp.domain.*;
 import dare.spring5recipe.app.spring5recipeapp.repositories.CategoryRepository;
 import dare.spring5recipe.app.spring5recipeapp.repositories.RecipeRepository;
 import dare.spring5recipe.app.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class RecipeBootstrap {
+public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
@@ -22,6 +24,11 @@ public class RecipeBootstrap {
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
+    }
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        recipeRepository.saveAll(getRecipes());
     }
 
     private List<Recipe> getRecipes() {
@@ -193,5 +200,6 @@ public class RecipeBootstrap {
         recipes.add(tacosRecipe);
         return recipes;
     }
+
 
 }
