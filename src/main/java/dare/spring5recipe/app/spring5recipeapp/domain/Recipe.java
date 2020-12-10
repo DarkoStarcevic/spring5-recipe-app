@@ -18,8 +18,6 @@ public class Recipe {
     private String url;
     private String directions;
 
-    //test1
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
 
@@ -33,8 +31,21 @@ public class Recipe {
     private Notes notes;
 
     @ManyToMany
-    private Set<Category> categorySet;
+   /* @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+   */
 
+    private Set<Category> categories = new HashSet<>();
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -108,14 +119,6 @@ public class Recipe {
         this.notes = notes;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
     public Set<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -132,11 +135,18 @@ public class Recipe {
         this.difficulty = difficulty;
     }
 
-    public Set<Category> getCategorySet() {
-        return categorySet;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategorySet(Set<Category> categorySet) {
-        this.categorySet = categorySet;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+
+    public Recipe addIngredient(Ingredient ingredient) {
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+        return this;
     }
 }
