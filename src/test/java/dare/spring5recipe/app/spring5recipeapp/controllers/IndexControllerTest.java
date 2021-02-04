@@ -1,5 +1,4 @@
 package dare.spring5recipe.app.spring5recipeapp.controllers;
-
 import dare.spring5recipe.app.spring5recipeapp.domain.Recipe;
 import dare.spring5recipe.app.spring5recipeapp.services.RecipeService;
 import org.junit.Before;
@@ -33,8 +32,8 @@ public class IndexControllerTest {
     @Before
     public void setUp() throws Exception {
 
-        MockitoAnnotations.openMocks(this);
 
+        MockitoAnnotations.initMocks(this);
          indexController = new IndexController(recipeService);
     }
 
